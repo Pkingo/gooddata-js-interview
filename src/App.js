@@ -6,62 +6,20 @@ import '@gooddata/react-components/styles/css/main.css';
 import { ColumnChart } from '@gooddata/react-components';
 import moment from 'moment';
 
-const grossProfitMeasure = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/6877';
-const dateAttributeInMonths = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2142';
-const dateAttribute = '/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2180';
+import {getMonthFilter} from './utils/getMonthFilter';
+import {getMeasures} from './utils/getMeasures';
+import {getViewBy} from './utils/getViewBy';
+
 
 class App extends Component {
 	constructor(props) {
     super(props)
 		this.state = {
       projectId: 'xms7ga4tf3g3nzucd8380o2bev8oeknp',
-			filters: [this.getMonthFilter(0)],
-			measures: this.getMeasures(),
-			viewBy: this.getViewBy(),
+			filters: [getMonthFilter(0)],
+			measures: getMeasures(),
+			viewBy: getViewBy(),
 		};
-	}
-
-getMonthFilter(month) {
-  const date = new Date(2016, month + 1, 0)
-  const from = moment(date).startOf('month').format('YYYY-MM-DD');
-  const to   = moment(date).endOf('month').format('YYYY-MM-DD');
-	return {
-		absoluteDateFilter: {
-			dataSet: {
-				uri: dateAttribute
-			},
-			from,
-			to
-		}
-	}
-}
-
-	getMeasures() {
-		return [{
-			measure: {
-				localIdentifier: 'm1',
-					definition: {
-						measureDefinition: {
-							item: {
-								uri: grossProfitMeasure
-							}
-						}
-					},
-					alias: '$ Gross Profit'
-				}
-			}
-		]
-	}
-
-	getViewBy() {
-		return {
-			visualizationAttribute: {
-				displayForm: {
-					uri: dateAttributeInMonths
-				},
-				localIdentifier: 'a1'
-			}
-		}
 	}
 
 	renderDropdownOption(month, value) {
@@ -69,7 +27,7 @@ getMonthFilter(month) {
 	}
 		
 	onDropdownSelect = (event) => {
-		this.setState({filters: [this.getMonthFilter(event.currentTarget.value)]});
+		this.setState({filters: [getMonthFilter(event.currentTarget.value)]});
 	}
 
 	renderDropdown() {
