@@ -3,5 +3,5 @@ module.exports = {
     "\\.(css|less)$": "identity-obj-proxy"
   },
   verbose: true,
-  setupFilesAfterEnv: ["<rootDir>/__setup__/setup.js"],
+  setupTestFrameworkScriptFile: "<rootDir>/__setup__/setup.js",
 };
